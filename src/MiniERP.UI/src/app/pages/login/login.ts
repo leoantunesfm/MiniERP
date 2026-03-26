@@ -41,7 +41,7 @@ export class LoginComponent {
         
         this.isLoading = false;
         
-        alert(`Bem-vindo de volta, ${response.nome}!\nSeu token foi salvo no navegador.`);
+        this.router.navigate(['/dashboard']);
         
       },
       error: (err) => {

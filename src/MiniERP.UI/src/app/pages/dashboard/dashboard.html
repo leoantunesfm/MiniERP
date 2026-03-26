@@ -1,0 +1,51 @@
+<div class="min-h-screen bg-gray-100 flex">
+  
+  <aside class="w-64 bg-slate-800 text-white flex flex-col">
+    <div class="h-16 flex items-center justify-center border-b border-slate-700 font-bold text-xl tracking-wider">
+      MiniERP
+    </div>
+    <nav class="flex-1 px-4 py-6 space-y-2">
+      <a href="#" class="block px-4 py-2 bg-blue-600 rounded-md transition-colors">
+        Dashboard
+      </a>
+      <a href="#" class="block px-4 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors">
+        Produtos
+      </a>
+      <a href="#" class="block px-4 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors">
+        Vendas
+      </a>
+    </nav>
+  </aside>
+
+  <main class="flex-1 flex flex-col">
+    
+    <header class="h-16 bg-white shadow-sm flex items-center justify-between px-8">
+      <h1 class="text-xl font-semibold text-gray-800">Visão Geral</h1>
+      
+      <div class="flex items-center space-x-4">
+        <span class="text-sm text-gray-600">Olá, <strong>{{ nomeUsuario }}</strong></span>
+        <button (click)="logout()" class="text-sm font-medium text-red-600 hover:text-red-800 transition-colors">
+          Sair
+        </button>
+      </div>
+    </header>
+
+    <div class="p-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <h3 class="text-gray-500 text-sm font-medium">Vendas no Mês</h3>
+          <p class="text-3xl font-bold text-gray-800 mt-2">R$ 0,00</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <h3 class="text-gray-500 text-sm font-medium">Produtos Ativos</h3>
+          <p class="text-3xl font-bold text-gray-800 mt-2">0</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <h3 class="text-gray-500 text-sm font-medium">Novos Clientes</h3>
+          <p class="text-3xl font-bold text-gray-800 mt-2">0</p>
+        </div>
+      </div>
+    </div>
+    
+  </main>
+</div>
