@@ -17,15 +17,32 @@ export interface RegisterTenantResponse {
   mensagem: string;
 }
 
+export interface LoginRequest {
+  email: string;
+  senha: string;
+}
+
+export interface LoginResponse {
+  token: string;
+  usuarioId: string;
+  empresaId: string;
+  nome: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
   private readonly apiUrl = 'http://localhost:5209/api'; 
 
   constructor(private http: HttpClient) { }
 
   registerTenant(data: RegisterTenantRequest): Observable<RegisterTenantResponse> {
     return this.http.post<RegisterTenantResponse>(`${this.apiUrl}/Tenants/register`, data);
+  }
+
+  login(data: LoginRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/Auth/login`, data);
   }
 }

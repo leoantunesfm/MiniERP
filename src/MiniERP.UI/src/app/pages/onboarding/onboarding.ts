@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-onboarding',
@@ -13,6 +14,7 @@ import { AuthService } from '../../services/auth';
 export class OnboardingComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   onboardingForm: FormGroup = this.fb.group({
     razaoSocial: ['', Validators.required],
@@ -44,6 +46,10 @@ export class OnboardingComponent {
         this.successMessage = response.mensagem;
         this.isLoading = false;
         this.onboardingForm.reset();
+        
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 2000);        
       },
       error: (err) => {
         this.errorMessage = err.error?.Erro || 'Ocorreu um erro ao processar o cadastro.';
