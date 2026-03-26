@@ -11,15 +11,22 @@ Sistema simples de gestão comercial no modelo *SaaS* (*Software as a Service*).
 - **Financeiro:** Contas a receber (crediário) e Contas a pagar.
 - **Gestão de Acessos:** Cadastro de usuários e vendedores com *Role-Based Access Control* (RBAC).
 - **Dashboard:** Tela inicial com indicadores chave de performance (KPIs) e atalhos de navegação.
+  
+## Stack Tecnológica
+- **Back-end:** .NET 10 (Web API)
+- **ORM:** Entity Framework Core (Code-First) com Migrations
+- **Banco de Dados:** PostgreSQL
+- **Front-end:** Angular *(Em desenvolvimento)*
 
-## Tech Stack
-- **Back-end:** .NET 10 (Web API).
-- **ORM:** Entity Framework Core (Code-First) com Migrations para versionamento do *schema* do banco de dados.
-- **Banco de Dados:** PostgreSQL.
-- **Front-end:** Angular (SPA - *Single Page Application*).
-- **Infraestrutura & DevOps:** - *Containers* com Docker e Docker Compose.
-  - *Continuous Integration* / *Continuous Deployment* (CI/CD) via GitHub Actions.
-  - *Cloud Provider*: AWS.
+### Qualidade e Testes (QA)
+- **Back-end Testing:** xUnit (Framework), NSubstitute (Mocking) e FluentAssertions (Asserts).
+- **Front-end Testing:** Jest.
+
+### Infraestrutura & DevOps
+- **Containers:** Docker e Docker Compose
+- **CI/CD:** GitHub Actions *(Planejado)*
+- **Cloud Provider:** AWS *(Planejado)*
+- **Ferramentas:** Visual Studio Code, CLI nativa
 
 ## Padrões e Arquitetura
 - Código escrito mesclando inglês para *Design Patterns* e estrutura core, e português para o domínio de negócio, facilitando a manutenção local.
