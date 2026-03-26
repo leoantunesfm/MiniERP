@@ -13,3 +13,4 @@ C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Application\obj\Debug\net10.0\refint\MiniERP.Application.dll
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Application\obj\Debug\net10.0\MiniERP.Application.pdb
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Application\obj\Debug\net10.0\ref\MiniERP.Application.dll
+C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Application\obj\Debug\net10.0\MiniERP.Application.sourcelink.json

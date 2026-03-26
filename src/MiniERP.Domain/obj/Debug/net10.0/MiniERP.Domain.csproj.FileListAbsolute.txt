@@ -9,3 +9,4 @@ C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Domain\obj\Debug\net10.0\refint\MiniERP.Domain.dll
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Domain\obj\Debug\net10.0\MiniERP.Domain.pdb
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Domain\obj\Debug\net10.0\ref\MiniERP.Domain.dll
+C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Domain\obj\Debug\net10.0\MiniERP.Domain.sourcelink.json
