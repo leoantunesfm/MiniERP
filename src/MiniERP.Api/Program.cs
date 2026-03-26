@@ -52,6 +52,16 @@ builder.Services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
 builder.Services.AddScoped<RegisterTenantUseCase>();
 builder.Services.AddScoped<LoginUseCase>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -62,6 +72,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAngularApp");
 
 app.UseAuthentication(); 
 app.UseAuthorization();
