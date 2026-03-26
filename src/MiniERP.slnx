@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="MiniERP.Api/MiniERP.Api.csproj" />
+  <Project Path="MiniERP.Application/MiniERP.Application.csproj" />
+  <Project Path="MiniERP.Domain/MiniERP.Domain.csproj" />
+  <Project Path="MiniERP.Infrastructure/MiniERP.Infrastructure.csproj" />
+</Solution>
