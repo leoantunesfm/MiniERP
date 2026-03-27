@@ -8,9 +8,9 @@ C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Application\obj\Debug\net10.0\MiniERP.Application.AssemblyInfoInputs.cache
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Application\obj\Debug\net10.0\MiniERP.Application.AssemblyInfo.cs
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Application\obj\Debug\net10.0\MiniERP.Application.csproj.CoreCompileInputs.cache
+C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Application\obj\Debug\net10.0\MiniERP.Application.sourcelink.json
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Application\obj\Debug\net10.0\MiniERP..B0FE01E0.Up2Date
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Application\obj\Debug\net10.0\MiniERP.Application.dll
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Application\obj\Debug\net10.0\refint\MiniERP.Application.dll
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Application\obj\Debug\net10.0\MiniERP.Application.pdb
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Application\obj\Debug\net10.0\ref\MiniERP.Application.dll
-C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Application\obj\Debug\net10.0\MiniERP.Application.sourcelink.json

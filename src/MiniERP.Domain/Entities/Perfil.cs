@@ -4,8 +4,8 @@ namespace MiniERP.Domain.Entities;
 
 public class Perfil : BaseEntity
 {
-    public string Nome { get; private set; }
-    public string Descricao { get; private set; }
+    public string Nome { get; private set; } = null!;
+    public string Descricao { get; private set; } = null!;
     public ICollection<UsuarioPerfil> UsuarioPerfis { get; private set; } = new List<UsuarioPerfil>();
     protected Perfil() { }
 

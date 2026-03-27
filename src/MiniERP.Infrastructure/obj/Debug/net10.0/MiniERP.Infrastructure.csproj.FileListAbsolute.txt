@@ -8,9 +8,9 @@ C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Infrastructure\obj\Debug\net10.0\MiniERP.Infrastructure.AssemblyInfoInputs.cache
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Infrastructure\obj\Debug\net10.0\MiniERP.Infrastructure.AssemblyInfo.cs
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Infrastructure\obj\Debug\net10.0\MiniERP.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Infrastructure\obj\Debug\net10.0\MiniERP.Infrastructure.sourcelink.json
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Infrastructure\obj\Debug\net10.0\MiniERP..C61D4C3D.Up2Date
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Infrastructure\obj\Debug\net10.0\MiniERP.Infrastructure.dll
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Infrastructure\obj\Debug\net10.0\refint\MiniERP.Infrastructure.dll
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Infrastructure\obj\Debug\net10.0\MiniERP.Infrastructure.pdb
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Infrastructure\obj\Debug\net10.0\ref\MiniERP.Infrastructure.dll
-C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Infrastructure\obj\Debug\net10.0\MiniERP.Infrastructure.sourcelink.json

@@ -8,6 +8,7 @@ using MiniERP.Domain.Interfaces;
 using MiniERP.Infrastructure.Data;
 using MiniERP.Infrastructure.Repositories;
 using MiniERP.Infrastructure.Security;
+using MiniERP.Infrastructure.Middlewares;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -63,6 +64,8 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
