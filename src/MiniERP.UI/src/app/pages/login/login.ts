@@ -38,14 +38,14 @@ export class LoginComponent {
 
         localStorage.setItem('minierp_token', response.token);
         localStorage.setItem('minierp_user_nome', response.nome);
-        
+
         this.isLoading = false;
-        
+
         this.router.navigate(['/dashboard']);
-        
+
       },
       error: (err) => {
-        this.errorMessage = err.error?.Erro || 'Erro ao tentar fazer login.';
+        this.errorMessage = err.error?.detail || 'Erro ao tentar fazer login.';
         this.isLoading = false;
       }
     });
