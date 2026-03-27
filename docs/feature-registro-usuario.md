@@ -1,57 +1,26 @@
 # Feature: Registro de Novo Usuário (Onboarding Multitenant)
 
 ## Descrição
-Fluxo inicial onde um novo cliente acessa a plataforma, cria a sua conta de acesso e, simultaneamente, registra a sua empresa (*Tenant*). Este será o usuário administrador daquela instância, recebendo o perfil de 'Admin' por padrão. Posteriormente, dentro da plataforma, será possível atribuir múltiplos perfis de acesso a um mesmo usuário (ex: Vendedor e Financeiro).
+Fluxo de entrada de um novo cliente na plataforma. O processo foi dividido em etapas para garantir a validação de identidade (e-mail) e coletar dados precisos de forma automatizada (integração ReceitaWS e upload de documentos).
 
-## 1. Banco de Dados (Tabelas Principais)
-Usaremos o Entity Framework Core com a abordagem *Code-First*. Para suportar múltiplos perfis por usuário, utilizaremos um relacionamento N:N.
+## Fluxo de Estados (Tenant Status)
+Uma empresa/usuário passará pelos seguintes status:
+1. `AguardandoConfirmacaoEmail`: Conta criada, mas sem acesso liberado.
+2. `AguardandoDadosCompletos`: E-mail validado. O usuário pode fazer login, mas fica travado na tela de conclusão de cadastro.
+3. `Ativo`: Todos os dados e documentos foram fornecidos. Acesso total liberado.
 
-* **Table `Empresa` (Tenant)**
-    * `Id` (UUID/Guid) - *Primary Key*
-    * `RazaoSocial` (string)
-    * `NomeFantasia` (string)
-    * `CNPJ` (string)
-    * `DataCadastro` (DateTime)
+## 1. Etapa 1: Registro Inicial e Validação de E-mail
+* **Front-end:** Formulário simples contendo apenas **CNPJ**, Nome do Administrador, E-mail e Senha.
+* **Back-end:** * Cria a empresa com status `AguardandoConfirmacaoEmail`.
+  * Publica uma mensagem na fila do RabbitMQ (`email-validation-queue`) contendo o e-mail, nome e um *Token de Validação* (Guid exclusivo ou JWT temporário).
+* **Worker (Mensageria):** Um serviço em *background* consome a fila e faz o disparo SMTP do e-mail com o link de confirmação.
 
-* **Table `Usuario` (User)**
-    * `Id` (UUID/Guid) - *Primary Key*
-    * `EmpresaId` (UUID/Guid) - *Foreign Key* vinculando ao Tenant
-    * `Nome` (string)
-    * `Email` (string) - Único
-    * `SenhaHash` (string)
-    * `Ativo` (bool)
+## 2. Etapa 2: Conclusão de Cadastro (Enriquecimento de Dados)
+* **API Externa:** Após o usuário clicar no link do e-mail, ele faz login e cai na tela de conclusão. O Back-end consulta a API pública `https://receitaws.com.br/v1/cnpj/{cnpj}`.
+* **Front-end:** Apresenta um formulário pré-preenchido com Razão Social, Nome Fantasia, CEP, Logradouro, Número, Complemento, Bairro, Município, UF e Telefone. O usuário pode editar os campos.
+* **Upload de Documentos:** Na mesma tela, o usuário anexa arquivos comprobatórios (ex: Contrato Social). O Back-end envia esses arquivos para um *Bucket* no MinIO (S3 Compatible).
+* **Conclusão:** O Back-end salva a URL/Path do documento no banco, atualiza os dados da empresa e muda o status para `Ativo`.
 
-* **Table `Perfil` (Role)**
-    * `Id` (UUID/Guid) - *Primary Key*
-    * `Nome` (string) - Ex: Admin, Vendedor, Financeiro, Estoque
-    * `Descricao` (string)
-
-* **Table `UsuarioPerfil` (UserRole)** *(Tabela de Junção)*
-    * `UsuarioId` (UUID/Guid) - *Foreign Key*
-    * `PerfilId` (UUID/Guid) - *Foreign Key*
-
-## 2. API Back-end (Estrutura DDD)
-
-### Camadas (*Layers*)
-* **Domain:** Entidades (`Empresa`, `Usuario`, `Perfil`), *Value Objects* (ex: `Cnpj`, `Email`), e *Interfaces* de *Repository* (`IEmpresaRepository`, `IUsuarioRepository`, `IPerfilRepository`).
-* **Application:** *Use Cases* (ex: `RegisterTenantUseCase`), *DTOs* (Data Transfer Objects) para entrada e saída de dados.
-* **Infrastructure:** Implementação dos repositórios usando o `AppDbContext` do EF Core, configuração do relacionamento N:N via *Fluent API* (`HasMany().WithMany()`) e migrações.
-* **Presentation:** `TenantsController` expondo o endpoint de registro.
-
-### Endpoints
-* `POST /api/tenants/register`
-    * **Payload (Request):** Dados da empresa (Razão Social, CNPJ) e dados do usuário (Nome, Email, Senha).
-    * **Response:** `201 Created` com os dados básicos gerados ou `400 Bad Request`.
-    * *Regra de Negócio Central:* O *Use Case* de registro deve automaticamente criar o *Tenant*, o *User* e vincular o *Role* de 'Admin' a este primeiro usuário criado.
-
-## 3. Front-end (Angular)
-
-### Telas (*Components*)
-* **Register Component:** Um formulário para o *Onboarding*.
-    * *Step 1:* Dados da Empresa.
-    * *Step 2:* Dados do Usuário Administrador.
-* **Services:** `TenantService` para fazer as chamadas HTTP (`HttpClient`) para a API.
-
-### Validações Visuais
-* Bloquear o botão de "Criar Conta" caso os campos obrigatórios não estejam preenchidos.
-* Exibir mensagens de erro amigáveis retornadas pela API (ex: CNPJ inválido ou E-mail já em uso).
+## 3. Banco de Dados (Alterações Previstas)
+* **Tabela `Empresas`:** Adição dos campos de Endereço, Telefone, e campo `Status` (Enum).
+* **Tabela `DocumentosEmpresa`:** Nova tabela para registrar os metadados dos arquivos anexados (Id, EmpresaId, NomeArquivo, S3Path, DataUpload).
