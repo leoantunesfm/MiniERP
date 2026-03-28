@@ -14,3 +14,5 @@ C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Infrastructure\obj\Debug\net10.0\refint\MiniERP.Infrastructure.dll
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Infrastructure\obj\Debug\net10.0\MiniERP.Infrastructure.pdb
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Infrastructure\obj\Debug\net10.0\ref\MiniERP.Infrastructure.dll
+C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Infrastructure\bin\Debug\net10.0\MiniERP.Application.dll
+C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Infrastructure\bin\Debug\net10.0\MiniERP.Application.pdb

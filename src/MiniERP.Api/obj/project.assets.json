@@ -900,6 +900,7 @@
           "AWSSDK.S3": "4.0.19.4",
           "BCrypt.Net-Next": "4.1.0",
           "Microsoft.EntityFrameworkCore": "10.0.5",
+          "MiniERP.Application": "1.0.0",
           "MiniERP.Domain": "1.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.1",
           "RabbitMQ.Client": "7.2.1",

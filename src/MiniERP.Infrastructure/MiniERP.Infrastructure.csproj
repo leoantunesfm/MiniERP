@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MiniERP.Domain\MiniERP.Domain.csproj" />
+    <ProjectReference Include="..\MiniERP.Application\MiniERP.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Mappings\" />
+    <Folder Include="ExternalServices\" />
     <Folder Include="Middlewares\" />
     <Folder Include="Services\" />
   </ItemGroup>

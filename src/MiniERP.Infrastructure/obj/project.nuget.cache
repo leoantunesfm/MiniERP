@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "q5cB89MQ3Yo=",
+  "dgSpecHash": "q/A5utTBsNw=",
   "success": true,
   "projectFilePath": "C:\\Users\\leoan\\OneDrive\\Documents\\Education\\Programação\\Repository\\MiniERP\\src\\MiniERP.Infrastructure\\MiniERP.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -30,7 +30,8 @@
     "C:\\Users\\leoan\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\10.0.4\\microsoft.entityframeworkcore.relational.10.0.4.nupkg.sha512",
     "C:\\Users\\leoan\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\10.0.5\\microsoft.extensions.caching.abstractions.10.0.5.nupkg.sha512",
     "C:\\Users\\leoan\\.nuget\\packages\\microsoft.extensions.caching.memory\\10.0.5\\microsoft.extensions.caching.memory.10.0.5.nupkg.sha512",
-    "C:\\Users\\leoan\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\10.0.4\\microsoft.extensions.configuration.abstractions.10.0.4.nupkg.sha512",
+    "C:\\Users\\leoan\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.5\\microsoft.extensions.configuration.10.0.5.nupkg.sha512",
+    "C:\\Users\\leoan\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\10.0.5\\microsoft.extensions.configuration.abstractions.10.0.5.nupkg.sha512",
     "C:\\Users\\leoan\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\10.0.5\\microsoft.extensions.dependencyinjection.10.0.5.nupkg.sha512",
     "C:\\Users\\leoan\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.5\\microsoft.extensions.dependencyinjection.abstractions.10.0.5.nupkg.sha512",
     "C:\\Users\\leoan\\.nuget\\packages\\microsoft.extensions.dependencymodel\\2.1.0\\microsoft.extensions.dependencymodel.2.1.0.nupkg.sha512",

@@ -439,10 +439,30 @@
           "buildTransitive/net8.0/_._": {}
         }
       },
-      "Microsoft.Extensions.Configuration.Abstractions/10.0.4": {
+      "Microsoft.Extensions.Configuration/10.0.5": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "10.0.4"
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.5",
+          "Microsoft.Extensions.Primitives": "10.0.5"
+        },
+        "compile": {
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0/_._": {}
+        }
+      },
+      "Microsoft.Extensions.Configuration.Abstractions/10.0.5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "10.0.5"
         },
         "compile": {
           "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll": {
@@ -829,6 +849,21 @@
         },
         "build": {
           "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "MiniERP.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "10.0.5",
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.5",
+          "MiniERP.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/MiniERP.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MiniERP.Application.dll": {}
         }
       },
       "MiniERP.Domain/1.0.0": {
@@ -1261,10 +1296,39 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.Configuration.Abstractions/10.0.4": {
-      "sha512": "3x9X9SMAMdAoEwWxHfsT2a9dTBqEtfYfbEOFw+UPtBshEH2gHWJeazxrZ1FK1O18MoCbe1NxINg5qciB01pEcg==",
+    "Microsoft.Extensions.Configuration/10.0.5": {
+      "sha512": "8Rx5sqg04FttxrumyG6bmoRuFRgYzK6IVwF1i0/o0cXfKBdDeVpJejKHtJCMjyg9E/DNMVqpqOGe/tCT5gYvVA==",
       "type": "package",
-      "path": "microsoft.extensions.configuration.abstractions/10.0.4",
+      "path": "microsoft.extensions.configuration/10.0.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/Microsoft.Extensions.Configuration.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Configuration.targets",
+        "lib/net10.0/Microsoft.Extensions.Configuration.dll",
+        "lib/net10.0/Microsoft.Extensions.Configuration.xml",
+        "lib/net462/Microsoft.Extensions.Configuration.dll",
+        "lib/net462/Microsoft.Extensions.Configuration.xml",
+        "lib/net8.0/Microsoft.Extensions.Configuration.dll",
+        "lib/net8.0/Microsoft.Extensions.Configuration.xml",
+        "lib/net9.0/Microsoft.Extensions.Configuration.dll",
+        "lib/net9.0/Microsoft.Extensions.Configuration.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.xml",
+        "microsoft.extensions.configuration.10.0.5.nupkg.sha512",
+        "microsoft.extensions.configuration.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "Microsoft.Extensions.Configuration.Abstractions/10.0.5": {
+      "sha512": "P09QpTHjqHmCLQOTC+WyLkoRNxek4NIvfWt+TnU0etoDUSRxcltyd6+j/ouRbMdLR0j44GqGO+lhI2M4fAHG4g==",
+      "type": "package",
+      "path": "microsoft.extensions.configuration.abstractions/10.0.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1285,7 +1349,7 @@
         "lib/net9.0/Microsoft.Extensions.Configuration.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.xml",
-        "microsoft.extensions.configuration.abstractions.10.0.4.nupkg.sha512",
+        "microsoft.extensions.configuration.abstractions.10.0.5.nupkg.sha512",
         "microsoft.extensions.configuration.abstractions.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -1904,6 +1968,11 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "MiniERP.Application/1.0.0": {
+      "type": "project",
+      "path": "../MiniERP.Application/MiniERP.Application.csproj",
+      "msbuildProject": "../MiniERP.Application/MiniERP.Application.csproj"
+    },
     "MiniERP.Domain/1.0.0": {
       "type": "project",
       "path": "../MiniERP.Domain/MiniERP.Domain.csproj",
@@ -1917,6 +1986,7 @@
       "Microsoft.AspNetCore.Http.Abstractions >= 2.3.9",
       "Microsoft.AspNetCore.Mvc.Core >= 2.3.9",
       "Microsoft.EntityFrameworkCore >= 10.0.5",
+      "MiniERP.Application >= 1.0.0",
       "MiniERP.Domain >= 1.0.0",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 10.0.1",
       "RabbitMQ.Client >= 7.2.1",
@@ -1956,6 +2026,9 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
+            "C:\\Users\\leoan\\OneDrive\\Documents\\Education\\Programação\\Repository\\MiniERP\\src\\MiniERP.Application\\MiniERP.Application.csproj": {
+              "projectPath": "C:\\Users\\leoan\\OneDrive\\Documents\\Education\\Programação\\Repository\\MiniERP\\src\\MiniERP.Application\\MiniERP.Application.csproj"
+            },
             "C:\\Users\\leoan\\OneDrive\\Documents\\Education\\Programação\\Repository\\MiniERP\\src\\MiniERP.Domain\\MiniERP.Domain.csproj": {
               "projectPath": "C:\\Users\\leoan\\OneDrive\\Documents\\Education\\Programação\\Repository\\MiniERP\\src\\MiniERP.Domain\\MiniERP.Domain.csproj"
             }

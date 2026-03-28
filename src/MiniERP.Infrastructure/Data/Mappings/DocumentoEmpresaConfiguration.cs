@@ -10,9 +10,16 @@ public class DocumentoEmpresaConfiguration : IEntityTypeConfiguration<DocumentoE
     {
         builder.ToTable("DocumentosEmpresas");
         builder.HasKey(e => e.Id);
+        builder.Property(d => d.Id).ValueGeneratedNever();
+        builder.Property(d => d.EmpresaId).IsRequired();
         
         builder.Property(e => e.NomeArquivo).IsRequired().HasMaxLength(255);
         builder.Property(e => e.S3Path).IsRequired().HasMaxLength(1000);
         builder.Property(e => e.DataUpload).IsRequired();
+
+        builder.HasOne(d => d.Empresa)
+            .WithMany(e => e.Documentos)
+            .HasForeignKey(d => d.EmpresaId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

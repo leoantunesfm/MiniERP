@@ -13,6 +13,7 @@
           "Microsoft.AspNetCore.Http.Abstractions": "2.3.9",
           "Microsoft.AspNetCore.Mvc.Core": "2.3.9",
           "Microsoft.EntityFrameworkCore": "10.0.5",
+          "MiniERP.Application": "1.0.0",
           "MiniERP.Domain": "1.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.1",
           "RabbitMQ.Client": "7.2.1",
@@ -115,7 +116,7 @@
       "Microsoft.AspNetCore.Hosting.Server.Abstractions/2.3.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Http.Features": "2.3.0",
-          "Microsoft.Extensions.Configuration.Abstractions": "10.0.4"
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.5"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Hosting.Server.Abstractions.dll": {
@@ -289,7 +290,7 @@
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "10.0.5",
           "Microsoft.Extensions.Caching.Memory": "10.0.5",
-          "Microsoft.Extensions.Configuration.Abstractions": "10.0.4",
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.5",
           "Microsoft.Extensions.Logging": "10.0.5"
         },
         "runtime": {
@@ -325,14 +326,26 @@
           }
         }
       },
-      "Microsoft.Extensions.Configuration.Abstractions/10.0.4": {
+      "Microsoft.Extensions.Configuration/10.0.5": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.5",
+          "Microsoft.Extensions.Primitives": "10.0.5"
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.Extensions.Configuration.dll": {
+            "assemblyVersion": "10.0.0.0",
+            "fileVersion": "10.0.526.15411"
+          }
+        }
+      },
+      "Microsoft.Extensions.Configuration.Abstractions/10.0.5": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "10.0.5"
         },
         "runtime": {
           "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll": {
             "assemblyVersion": "10.0.0.0",
-            "fileVersion": "10.0.426.12010"
+            "fileVersion": "10.0.526.15411"
           }
         }
       },
@@ -392,7 +405,7 @@
       },
       "Microsoft.Extensions.Hosting.Abstractions/8.0.1": {
         "dependencies": {
-          "Microsoft.Extensions.Configuration.Abstractions": "10.0.4",
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.5",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.5",
           "Microsoft.Extensions.Diagnostics.Abstractions": "8.0.1",
           "Microsoft.Extensions.FileProviders.Abstractions": "8.0.0",
@@ -570,6 +583,19 @@
           "lib/net8.0/System.Threading.RateLimiting.dll": {
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.23.53103"
+          }
+        }
+      },
+      "MiniERP.Application/1.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "10.0.5",
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.5",
+          "MiniERP.Domain": "1.0.0"
+        },
+        "runtime": {
+          "MiniERP.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       },
@@ -764,12 +790,19 @@
       "path": "microsoft.extensions.caching.memory/10.0.5",
       "hashPath": "microsoft.extensions.caching.memory.10.0.5.nupkg.sha512"
     },
-    "Microsoft.Extensions.Configuration.Abstractions/10.0.4": {
+    "Microsoft.Extensions.Configuration/10.0.5": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-3x9X9SMAMdAoEwWxHfsT2a9dTBqEtfYfbEOFw+UPtBshEH2gHWJeazxrZ1FK1O18MoCbe1NxINg5qciB01pEcg==",
-      "path": "microsoft.extensions.configuration.abstractions/10.0.4",
-      "hashPath": "microsoft.extensions.configuration.abstractions.10.0.4.nupkg.sha512"
+      "sha512": "sha512-8Rx5sqg04FttxrumyG6bmoRuFRgYzK6IVwF1i0/o0cXfKBdDeVpJejKHtJCMjyg9E/DNMVqpqOGe/tCT5gYvVA==",
+      "path": "microsoft.extensions.configuration/10.0.5",
+      "hashPath": "microsoft.extensions.configuration.10.0.5.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Configuration.Abstractions/10.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-P09QpTHjqHmCLQOTC+WyLkoRNxek4NIvfWt+TnU0etoDUSRxcltyd6+j/ouRbMdLR0j44GqGO+lhI2M4fAHG4g==",
+      "path": "microsoft.extensions.configuration.abstractions/10.0.5",
+      "hashPath": "microsoft.extensions.configuration.abstractions.10.0.5.nupkg.sha512"
     },
     "Microsoft.Extensions.DependencyInjection/10.0.5": {
       "type": "package",
@@ -924,6 +957,11 @@
       "sha512": "sha512-7mu9v0QDv66ar3DpGSZHg9NuNcxDaaAcnMULuZlaTpP9+hwXhrxNGsF5GmLkSHxFdb5bBc1TzeujsRgTrPWi+Q==",
       "path": "system.threading.ratelimiting/8.0.0",
       "hashPath": "system.threading.ratelimiting.8.0.0.nupkg.sha512"
+    },
+    "MiniERP.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "MiniERP.Domain/1.0.0": {
       "type": "project",

@@ -12,6 +12,8 @@ using MiniERP.Infrastructure.Middlewares;
 using Scalar.AspNetCore;
 using MiniERP.Infrastructure.Services;
 using MiniERP.Api.Workers;
+using MiniERP.Application.Interfaces;
+using MiniERP.Infrastructure.ExternalServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,8 +60,12 @@ builder.Services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
 builder.Services.AddScoped<RegisterTenantUseCase>();
 builder.Services.AddScoped<LoginUseCase>();
 builder.Services.AddScoped<ConfirmEmailUseCase>();
+builder.Services.AddScoped<GetCompanyDataByCnpjUseCase>();
+builder.Services.AddScoped<CompleteRegistrationUseCase>();
 
 builder.Services.AddHostedService<EmailWorker>();
+
+builder.Services.AddHttpClient<IReceitaWsClient, ReceitaWsClient>();
 
 var frontendUrl = builder.Configuration["FrontendUrl"] ?? "http://localhost:4200";
 
