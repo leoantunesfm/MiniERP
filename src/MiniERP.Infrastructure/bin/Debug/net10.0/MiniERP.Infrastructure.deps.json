@@ -8,16 +8,37 @@
     ".NETCoreApp,Version=v10.0": {
       "MiniERP.Infrastructure/1.0.0": {
         "dependencies": {
+          "AWSSDK.S3": "4.0.19.4",
           "BCrypt.Net-Next": "4.1.0",
           "Microsoft.AspNetCore.Http.Abstractions": "2.3.9",
           "Microsoft.AspNetCore.Mvc.Core": "2.3.9",
           "Microsoft.EntityFrameworkCore": "10.0.5",
           "MiniERP.Domain": "1.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.1",
+          "RabbitMQ.Client": "7.2.1",
           "System.IdentityModel.Tokens.Jwt": "8.17.0"
         },
         "runtime": {
           "MiniERP.Infrastructure.dll": {}
+        }
+      },
+      "AWSSDK.Core/4.0.3.24": {
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.3.24"
+          }
+        }
+      },
+      "AWSSDK.S3/4.0.19.4": {
+        "dependencies": {
+          "AWSSDK.Core": "4.0.3.24"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.S3.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.19.4"
+          }
         }
       },
       "BCrypt.Net-Next/4.1.0": {
@@ -521,6 +542,17 @@
           }
         }
       },
+      "RabbitMQ.Client/7.2.1": {
+        "dependencies": {
+          "System.Threading.RateLimiting": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/RabbitMQ.Client.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.2.1.0"
+          }
+        }
+      },
       "System.IdentityModel.Tokens.Jwt/8.17.0": {
         "dependencies": {
           "Microsoft.IdentityModel.JsonWebTokens": "8.17.0",
@@ -530,6 +562,14 @@
           "lib/net10.0/System.IdentityModel.Tokens.Jwt.dll": {
             "assemblyVersion": "8.17.0.0",
             "fileVersion": "8.17.0.26082"
+          }
+        }
+      },
+      "System.Threading.RateLimiting/8.0.0": {
+        "runtime": {
+          "lib/net8.0/System.Threading.RateLimiting.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
           }
         }
       },
@@ -548,6 +588,20 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AWSSDK.Core/4.0.3.24": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Bq3mONgVTGheBWfqiVxPDgy/qpcEbsHuH9ColyGFgIiW4Smr/zizfPWI5OjUmxFJ2wlsX/Ooa5654C9bZh2wvg==",
+      "path": "awssdk.core/4.0.3.24",
+      "hashPath": "awssdk.core.4.0.3.24.nupkg.sha512"
+    },
+    "AWSSDK.S3/4.0.19.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kzyjlrmwJk6vTtNCTSyMi3JLiwXlY4pXyVcWo998/a++nAk50DGxIvk6ZXr1fAgdm8AWwdZI4glBTGhbzhfY7Q==",
+      "path": "awssdk.s3/4.0.19.4",
+      "hashPath": "awssdk.s3.4.0.19.4.nupkg.sha512"
     },
     "BCrypt.Net-Next/4.1.0": {
       "type": "package",
@@ -850,12 +904,26 @@
       "path": "npgsql.entityframeworkcore.postgresql/10.0.1",
       "hashPath": "npgsql.entityframeworkcore.postgresql.10.0.1.nupkg.sha512"
     },
+    "RabbitMQ.Client/7.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YKXEfg9fVQiTKgZlvIhAfPSFaamEgi8DsQmisCH0IAsU4FYLrtoguDrDj6JtJVGUt40QPnBLRH6fTQcAC4qsOg==",
+      "path": "rabbitmq.client/7.2.1",
+      "hashPath": "rabbitmq.client.7.2.1.nupkg.sha512"
+    },
     "System.IdentityModel.Tokens.Jwt/8.17.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-nKikRYheDeSaXA3wGr2otwaiRFygBa25m+hc7MEomZVIEWZvKVqd8wgP9yn+8QpLRGgw//dUs4LErGx9gtVmAA==",
       "path": "system.identitymodel.tokens.jwt/8.17.0",
       "hashPath": "system.identitymodel.tokens.jwt.8.17.0.nupkg.sha512"
+    },
+    "System.Threading.RateLimiting/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7mu9v0QDv66ar3DpGSZHg9NuNcxDaaAcnMULuZlaTpP9+hwXhrxNGsF5GmLkSHxFdb5bBc1TzeujsRgTrPWi+Q==",
+      "path": "system.threading.ratelimiting/8.0.0",
+      "hashPath": "system.threading.ratelimiting.8.0.0.nupkg.sha512"
     },
     "MiniERP.Domain/1.0.0": {
       "type": "project",

@@ -137,3 +137,6 @@ C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Api\obj\Debug\net10.0\MiniERP.Api.pdb
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Api\obj\Debug\net10.0\MiniERP.Api.genruntimeconfig.cache
 C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Api\obj\Debug\net10.0\ref\MiniERP.Api.dll
+C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Api\bin\Debug\net10.0\AWSSDK.Core.dll
+C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Api\bin\Debug\net10.0\AWSSDK.S3.dll
+C:\Users\leoan\OneDrive\Documents\Education\Programação\Repository\MiniERP\src\MiniERP.Api\bin\Debug\net10.0\RabbitMQ.Client.dll

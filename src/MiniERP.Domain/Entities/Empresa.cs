@@ -23,6 +23,8 @@ public class Empresa : BaseEntity
     public string? Municipio { get; private set; }
     public string? Uf { get; private set; }
 
+    public string? TokenConfirmacaoEmail { get; private set; }
+
     public ICollection<Usuario> Usuarios { get; private set; } = new List<Usuario>();
     public ICollection<DocumentoEmpresa> Documentos { get; private set; } = new List<DocumentoEmpresa>();
 
@@ -33,6 +35,8 @@ public class Empresa : BaseEntity
         Cnpj = cnpj;
         DataCadastro = DateTime.UtcNow;
         Status = TenantStatus.AguardandoConfirmacaoEmail;
+
+        TokenConfirmacaoEmail = Guid.NewGuid().ToString("N");
     }
 
     public void CompletarCadastro(
@@ -70,5 +74,14 @@ public class Empresa : BaseEntity
     public void AguardarDadosCompletos()
     {
         Status = TenantStatus.AguardandoDadosCompletos;
+    }
+
+    public void ConfirmarEmail()
+    {
+        DomainException.When(Status != TenantStatus.AguardandoConfirmacaoEmail, "O e-mail já foi confirmado ou o status é inválido.");
+        
+        Status = TenantStatus.AguardandoDadosCompletos; 
+        
+        TokenConfirmacaoEmail = null; 
     }
 }

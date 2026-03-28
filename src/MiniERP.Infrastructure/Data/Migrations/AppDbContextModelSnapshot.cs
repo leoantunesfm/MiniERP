@@ -98,6 +98,9 @@ namespace MiniERP.Infrastructure.Data.Migrations
                     b.Property<string>("Telefone")
                         .HasColumnType("text");
 
+                    b.Property<string>("TokenConfirmacaoEmail")
+                        .HasColumnType("text");
+
                     b.Property<string>("Uf")
                         .HasColumnType("text");
 

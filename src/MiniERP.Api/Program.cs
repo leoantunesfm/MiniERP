@@ -10,6 +10,8 @@ using MiniERP.Infrastructure.Repositories;
 using MiniERP.Infrastructure.Security;
 using MiniERP.Infrastructure.Middlewares;
 using Scalar.AspNetCore;
+using MiniERP.Infrastructure.Services;
+using MiniERP.Api.Workers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,20 +48,29 @@ builder.Services.AddScoped<IEmpresaRepository, EmpresaRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IPerfilRepository, PerfilRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IStorageService, MinioStorageService>();
+builder.Services.AddSingleton<IMessagePublisher, RabbitMqPublisher>();
 
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
 
 builder.Services.AddScoped<RegisterTenantUseCase>();
 builder.Services.AddScoped<LoginUseCase>();
+builder.Services.AddScoped<ConfirmEmailUseCase>();
+
+builder.Services.AddHostedService<EmailWorker>();
+
+var frontendUrl = builder.Configuration["FrontendUrl"] ?? "http://localhost:4200";
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp", policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
+        policy.WithOrigins("frontendUrl")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
 
@@ -82,5 +93,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGet("/", () => Results.Redirect("/scalar/v1"));
 
 app.Run();
