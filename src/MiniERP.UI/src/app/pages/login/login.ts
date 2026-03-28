@@ -38,6 +38,7 @@ export class LoginComponent {
 
         localStorage.setItem('minierp_token', response.token);
         localStorage.setItem('minierp_user_nome', response.nome);
+        localStorage.setItem('minierp_empresa_id', response.empresaId);
 
         this.isLoading = false;
 

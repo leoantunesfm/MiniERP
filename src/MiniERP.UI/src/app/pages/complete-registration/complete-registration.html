@@ -1,0 +1,112 @@
+<div class="min-h-screen flex items-center justify-center bg-base-200 p-4 py-12">
+  <div class="card w-full max-w-4xl bg-base-100 shadow-xl border border-base-300">
+    <div class="card-body">
+      
+      <h2 class="card-title text-3xl font-extrabold mb-1">Complete seu Cadastro</h2>
+      <p class="text-base-content/60 text-sm mb-6">Falta pouco! Precisamos de mais alguns dados e documentos da sua empresa para liberar seu acesso.</p>
+
+      @if (errorMessage) {
+        <div class="alert alert-error mb-4 shadow-sm text-sm">
+          <span>{{ errorMessage }}</span>
+        </div>
+      }
+
+      @if (isSearching) {
+        <div class="alert alert-info mb-6 shadow-sm text-sm flex items-center gap-3">
+          <span class="loading loading-spinner loading-sm"></span>
+          <span>Buscando dados da sua empresa na Receita Federal de forma automática...</span>
+        </div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+        
+        <div>
+          <h3 class="font-bold text-lg border-b border-base-200 pb-2 mb-4 text-base-content/80">Dados Gerais</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="form-control w-full md:col-span-2">
+              <label class="label"><span class="label-text font-medium">CNPJ</span></label>
+              <input formControlName="cnpjExibicao" type="text" class="input input-bordered w-full font-bold text-primary" />
+            </div>
+
+            <div class="form-control w-full">
+              <label class="label"><span class="label-text font-medium">Razão Social *</span></label>
+              <input formControlName="razaoSocial" type="text" class="input input-bordered w-full" />
+            </div>
+            <div class="form-control w-full">
+              <label class="label"><span class="label-text font-medium">Nome Fantasia *</span></label>
+              <input formControlName="nomeFantasia" type="text" class="input input-bordered w-full" />
+            </div>
+            <div class="form-control w-full md:col-span-2">
+              <label class="label"><span class="label-text font-medium">Telefone *</span></label>
+              <input formControlName="telefone" type="text" class="input input-bordered w-full" />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-lg border-b border-base-200 pb-2 mb-4 text-base-content/80">Endereço</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="form-control w-full">
+              <label class="label"><span class="label-text font-medium">CEP *</span></label>
+              <input formControlName="cep" type="text" class="input input-bordered w-full" />
+            </div>
+            <div class="form-control w-full md:col-span-2">
+              <label class="label"><span class="label-text font-medium">Logradouro *</span></label>
+              <input formControlName="logradouro" type="text" class="input input-bordered w-full" />
+            </div>
+            <div class="form-control w-full">
+              <label class="label"><span class="label-text font-medium">Número *</span></label>
+              <input formControlName="numero" type="text" class="input input-bordered w-full" />
+            </div>
+            <div class="form-control w-full">
+              <label class="label"><span class="label-text font-medium">Complemento</span></label>
+              <input formControlName="complemento" type="text" class="input input-bordered w-full" />
+            </div>
+            <div class="form-control w-full">
+              <label class="label"><span class="label-text font-medium">Bairro *</span></label>
+              <input formControlName="bairro" type="text" class="input input-bordered w-full" />
+            </div>
+            <div class="form-control w-full md:col-span-2">
+              <label class="label"><span class="label-text font-medium">Município *</span></label>
+              <input formControlName="municipio" type="text" class="input input-bordered w-full" />
+            </div>
+            <div class="form-control w-full">
+              <label class="label"><span class="label-text font-medium">UF *</span></label>
+              <input formControlName="uf" type="text" maxlength="2" class="input input-bordered w-full uppercase" />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-lg border-b border-base-200 pb-2 mb-4 text-base-content/80">Envio de Documentos *</h3>
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text text-base-content/60">Anexe o Contrato Social ou Identidade. Formatos: PDF, JPG ou PNG.</span>
+            </label>
+            <input type="file" class="file-input file-input-bordered file-input-primary w-full max-w-md" multiple (change)="onFileSelected($event)" accept=".pdf,image/jpeg,image/png" />
+            
+            @if (selectedFiles.length > 0) {
+              <ul class="mt-4 space-y-1">
+                @for (file of selectedFiles; track file.name) {
+                  <li class="text-sm text-success font-medium flex items-center gap-2">
+                    ✓ {{ file.name }}
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </div>
+
+        <div class="form-control mt-8">
+          <button type="submit" [disabled]="isLoading || isSearching" class="btn btn-primary w-full">
+            @if (isLoading) {
+              <span class="loading loading-spinner loading-sm"></span>
+            }
+            {{ isLoading ? 'Processando dados...' : 'Finalizar Cadastro e Acessar Dashboard' }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

@@ -2,68 +2,70 @@
   <div class="card w-full max-w-2xl bg-base-100 shadow-xl border border-base-300">
     <div class="card-body">
       
-      <h2 class="card-title justify-center text-3xl font-extrabold mb-1">Crie sua conta no MiniERP</h2>
-      <p class="text-center text-base-content/60 text-sm mb-6">Gestão simples e isolada para o seu negócio.</p>
-
-      <div *ngIf="errorMessage" class="alert alert-error mb-4 shadow-sm text-sm">
-        <span>{{ errorMessage }}</span>
+      <div *@if="emailSent" class="text-center py-10">
+        <div class="text-success mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h2 class="text-3xl font-extrabold mb-4">Quase lá!</h2>
+        <p class="text-base-content/80 text-lg mb-2">Verifique sua caixa de entrada para confirmar o e-mail.</p>
+        <p class="text-base-content/60 text-sm mb-6">Você só poderá acessar o sistema após clicar no link enviado.</p>
+        <a routerLink="/login" class="btn btn-primary">Voltar ao Login</a>
       </div>
-      <div *ngIf="successMessage" class="alert alert-success mb-4 shadow-sm text-sm">
-        <span>{{ successMessage }}</span>
-      </div>
 
-      <form [formGroup]="onboardingForm" (ngSubmit)="onSubmit()" class="space-y-6">
-        
-        <div>
-          <h3 class="font-bold text-lg border-b border-base-200 pb-2 mb-4 text-base-content/80">Dados da Empresa</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div *@if="!emailSent">
+        <h2 class="card-title justify-center text-3xl font-extrabold mb-1">Crie sua conta no MiniERP</h2>
+        <p class="text-center text-base-content/60 text-sm mb-6">Gestão simples e isolada para o seu negócio.</p>
+
+        <div *@if="errorMessage" class="alert alert-error mb-4 shadow-sm text-sm">
+          <span>{{ errorMessage }}</span>
+        </div>
+
+        <form [formGroup]="onboardingForm" (ngSubmit)="onSubmit()" class="space-y-6">
+          
+          <div>
+            <h3 class="font-bold text-lg border-b border-base-200 pb-2 mb-4 text-base-content/80">Dados da Empresa</h3>
             <div class="form-control w-full">
-              <label class="label"><span class="label-text font-medium">Razão Social</span></label>
-              <input formControlName="razaoSocial" type="text" class="input input-bordered w-full" />
-            </div>
-            <div class="form-control w-full">
-              <label class="label"><span class="label-text font-medium">Nome Fantasia</span></label>
-              <input formControlName="nomeFantasia" type="text" class="input input-bordered w-full" />
-            </div>
-            <div class="form-control w-full md:col-span-2">
               <label class="label"><span class="label-text font-medium">CNPJ (Somente números)</span></label>
               <input formControlName="cnpj" type="text" maxlength="14" class="input input-bordered w-full" />
             </div>
           </div>
-        </div>
 
-        <div class="pt-2">
-          <h3 class="font-bold text-lg border-b border-base-200 pb-2 mb-4 text-base-content/80">Administrador</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="form-control w-full md:col-span-2">
-              <label class="label"><span class="label-text font-medium">Nome Completo</span></label>
-              <input formControlName="nome" type="text" class="input input-bordered w-full" />
-            </div>
-            <div class="form-control w-full">
-              <label class="label"><span class="label-text font-medium">E-mail</span></label>
-              <input formControlName="email" type="email" class="input input-bordered w-full" />
-            </div>
-            <div class="form-control w-full">
-              <label class="label"><span class="label-text font-medium">Senha</span></label>
-              <input formControlName="senha" type="password" class="input input-bordered w-full" />
+          <div class="pt-2">
+            <h3 class="font-bold text-lg border-b border-base-200 pb-2 mb-4 text-base-content/80">Administrador</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="form-control w-full md:col-span-2">
+                <label class="label"><span class="label-text font-medium">Nome Completo</span></label>
+                <input formControlName="nome" type="text" class="input input-bordered w-full" />
+              </div>
+              <div class="form-control w-full">
+                <label class="label"><span class="label-text font-medium">E-mail</span></label>
+                <input formControlName="email" type="email" class="input input-bordered w-full" />
+              </div>
+              <div class="form-control w-full">
+                <label class="label"><span class="label-text font-medium">Senha</span></label>
+                <input formControlName="senha" type="password" class="input input-bordered w-full" />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="form-control mt-6">
-          <button type="submit" [disabled]="isLoading" class="btn btn-primary w-full">
-            <span *ngIf="isLoading" class="loading loading-spinner loading-sm"></span>
-            {{ isLoading ? 'Criando ambiente...' : 'Registrar Empresa' }}
-          </button>
-        </div>
-        
-        <div class="text-center mt-4">
-          <a routerLink="/login" class="link link-hover text-base-content/60 text-sm">
-            Já possui uma conta? Voltar ao login
-          </a>
-        </div>
+          <div class="form-control mt-6">
+            <button type="submit" [disabled]="isLoading" class="btn btn-primary w-full">
+              <span *@if="isLoading" class="loading loading-spinner loading-sm"></span>
+              {{ isLoading ? 'Criando ambiente...' : 'Registrar Empresa' }}
+            </button>
+          </div>
+          
+          <div class="text-center mt-4">
+            <a routerLink="/login" class="link link-hover text-base-content/60 text-sm">
+              Já possui uma conta? Voltar ao login
+            </a>
+          </div>
 
-      </form>
+        </form>
+      </div>
+
     </div>
   </div>
 </div>

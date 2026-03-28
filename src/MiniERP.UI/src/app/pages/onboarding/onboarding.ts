@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth';
 import { Router, RouterModule } from '@angular/router';
 
-
 @Component({
   selector: 'app-onboarding',
   standalone: true,
@@ -18,8 +17,6 @@ export class OnboardingComponent {
   private router = inject(Router);
 
   onboardingForm: FormGroup = this.fb.group({
-    razaoSocial: ['', Validators.required],
-    nomeFantasia: ['', Validators.required],
     cnpj: ['', [Validators.required, Validators.minLength(14), Validators.maxLength(14)]],
     nome: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
@@ -28,7 +25,7 @@ export class OnboardingComponent {
 
   isLoading = false;
   errorMessage = '';
-  successMessage = '';
+  emailSent = false;
 
   onSubmit() {
     if (this.onboardingForm.invalid) {
@@ -38,22 +35,17 @@ export class OnboardingComponent {
 
     this.isLoading = true;
     this.errorMessage = '';
-    this.successMessage = '';
 
     const formData = this.onboardingForm.value;
 
     this.authService.registerTenant(formData).subscribe({
-      next: (response) => {
-        this.successMessage = response.mensagem;
+      next: () => {
         this.isLoading = false;
-        this.onboardingForm.reset();
-        
-        setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 2000);        
+        this.emailSent = true; // Em vez de redirecionar, ativamos a tela de sucesso
+        this.onboardingForm.reset();     
       },
       error: (err) => {
-        this.errorMessage = err.error?.Erro || 'Ocorreu um erro ao processar o cadastro.';
+        this.errorMessage = err.error?.detail || 'Ocorreu um erro ao processar o cadastro.';
         this.isLoading = false;
       }
     });
