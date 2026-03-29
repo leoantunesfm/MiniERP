@@ -36,10 +36,16 @@ services:
       dockerfile: MiniERP.Api/Dockerfile
     environment:
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=MiniErpDb;Username=postgres;Password=admin_password
+      - RabbitMqSettings__HostName=rabbitmq
+      - EmailSettings__SmtpHost=mailpit
+      - MinioSettings__Endpoint=minio:9000
     ports:
       - "5209:8080"
     depends_on:
       - db
+      - rabbitmq
+      - mailpit
+      - minio
     restart: unless-stopped
 
   # 4. Front-end (Angular via Nginx)
