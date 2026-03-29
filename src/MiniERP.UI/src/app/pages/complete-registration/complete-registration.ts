@@ -113,6 +113,7 @@ export class CompleteRegistration implements OnInit {
     this.authService.completeRegistration(formData).subscribe({
       next: () => {
         this.isLoading = false;
+        localStorage.setItem('minierp_tenant_status', 'Ativo');
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {

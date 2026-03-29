@@ -34,15 +34,20 @@ export class LoginComponent {
     this.errorMessage = '';
 
     this.authService.login(this.loginForm.value).subscribe({
-      next: (response) => {
+      next: (response: any) => {
 
         localStorage.setItem('minierp_token', response.token);
         localStorage.setItem('minierp_user_nome', response.nome);
         localStorage.setItem('minierp_empresa_id', response.empresaId);
+        localStorage.setItem('minierp_tenant_status', response.tenantStatus);
 
         this.isLoading = false;
 
-        this.router.navigate(['/dashboard']);
+        if (response.tenantStatus === 'AguardandoDadosCompletos') {
+          this.router.navigate(['/complete-registration']);
+        } else {
+          this.router.navigate(['/dashboard']);
+        }
 
       },
       error: (err) => {

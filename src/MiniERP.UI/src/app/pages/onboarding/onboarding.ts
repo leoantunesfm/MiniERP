@@ -41,7 +41,7 @@ export class OnboardingComponent {
     this.authService.registerTenant(formData).subscribe({
       next: () => {
         this.isLoading = false;
-        this.emailSent = true; // Em vez de redirecionar, ativamos a tela de sucesso
+        this.emailSent = true;
         this.onboardingForm.reset();     
       },
       error: (err) => {

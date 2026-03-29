@@ -1,36 +1,44 @@
 <div class="min-h-screen flex items-center justify-center bg-base-200 p-4">
   <div class="card w-full max-w-md bg-base-100 shadow-xl border border-base-300">
     <div class="card-body">
-      
+
       <h2 class="card-title justify-center text-2xl font-extrabold mb-1">Entrar no MiniERP</h2>
       <p class="text-center text-base-content/60 text-sm mb-6">Acesse o ambiente da sua empresa.</p>
 
-      <div *@if="errorMessage" class="alert alert-error mb-4 shadow-sm text-sm">
-        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+      @if (errorMessage) {
+      <div class="alert alert-error mb-4 shadow-sm text-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
         <span>{{ errorMessage }}</span>
       </div>
+      }
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
-        
+
         <div class="form-control w-full">
           <label class="label"><span class="label-text font-medium">E-mail</span></label>
           <input formControlName="email" type="email" autocomplete="email" class="input input-bordered w-full" />
         </div>
-        
+
         <div class="form-control w-full">
           <label class="label"><span class="label-text font-medium">Senha</span></label>
-          <input formControlName="senha" type="password" autocomplete="current-password" class="input input-bordered w-full" />
+          <input formControlName="senha" type="password" autocomplete="current-password"
+            class="input input-bordered w-full" />
         </div>
 
         <div class="form-control mt-6">
           <button type="submit" [disabled]="isLoading" class="btn btn-primary w-full">
-            <span *@if="isLoading" class="loading loading-spinner loading-sm"></span>
+            @if (isLoading) {
+            <span class="loading loading-spinner loading-sm"></span>
+            }
             {{ isLoading ? 'Entrando...' : 'Entrar' }}
           </button>
         </div>
-        
+
       </form>
-      
+
       <div class="text-center mt-6">
         <a routerLink="/onboarding" class="link link-primary link-hover text-sm font-medium">
           Ainda não tem conta? Registre sua empresa

@@ -2,7 +2,8 @@
   <div class="card w-full max-w-2xl bg-base-100 shadow-xl border border-base-300">
     <div class="card-body">
       
-      <div *@if="emailSent" class="text-center py-10">
+      @if (emailSent){
+      <div class="text-center py-10">
         <div class="text-success mb-4">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -12,15 +13,17 @@
         <p class="text-base-content/80 text-lg mb-2">Verifique sua caixa de entrada para confirmar o e-mail.</p>
         <p class="text-base-content/60 text-sm mb-6">Você só poderá acessar o sistema após clicar no link enviado.</p>
         <a routerLink="/login" class="btn btn-primary">Voltar ao Login</a>
-      </div>
+      </div>}
 
-      <div *@if="!emailSent">
+      @if (!emailSent){
+      <div>
         <h2 class="card-title justify-center text-3xl font-extrabold mb-1">Crie sua conta no MiniERP</h2>
         <p class="text-center text-base-content/60 text-sm mb-6">Gestão simples e isolada para o seu negócio.</p>
 
-        <div *@if="errorMessage" class="alert alert-error mb-4 shadow-sm text-sm">
+        @if (errorMessage) {
+        <div class="alert alert-error mb-4 shadow-sm text-sm">
           <span>{{ errorMessage }}</span>
-        </div>
+        </div>}
 
         <form [formGroup]="onboardingForm" (ngSubmit)="onSubmit()" class="space-y-6">
           
@@ -52,7 +55,8 @@
 
           <div class="form-control mt-6">
             <button type="submit" [disabled]="isLoading" class="btn btn-primary w-full">
-              <span *@if="isLoading" class="loading loading-spinner loading-sm"></span>
+              @if (isLoading) {
+              <span class="loading loading-spinner loading-sm"></span>}
               {{ isLoading ? 'Criando ambiente...' : 'Registrar Empresa' }}
             </button>
           </div>
@@ -64,7 +68,7 @@
           </div>
 
         </form>
-      </div>
+      </div>}
 
     </div>
   </div>
