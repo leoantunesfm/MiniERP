@@ -32,7 +32,6 @@ public class EmailWorker : BackgroundService
             Password = _configuration["RabbitMqSettings:Password"]
         };
 
-        // LOOP DE RESILIÊNCIA: Tenta conectar até o RabbitMQ acordar ou a API ser desligada
         while (!stoppingToken.IsCancellationRequested)
         {
             try
@@ -43,7 +42,7 @@ public class EmailWorker : BackgroundService
                 await _channel.QueueDeclareAsync(queue: QueueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
                 
                 _logger.LogInformation("Conectado ao RabbitMQ com sucesso!");
-                break; // Sai do loop porque conseguiu conectar
+                break;
             }
             catch (Exception ex)
             {
@@ -52,7 +51,6 @@ public class EmailWorker : BackgroundService
             }
         }
 
-        // Se o loop foi cancelado por desligamento da aplicação, sai silenciosamente
         if (stoppingToken.IsCancellationRequested) return;
 
         var consumer = new AsyncEventingBasicConsumer(_channel!);
@@ -78,8 +76,7 @@ public class EmailWorker : BackgroundService
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Erro ao enviar e-mail.");
-                    // Rejeita a mensagem e devolve para a fila (requeue: true)
-                    await _channel!.BasicNackAsync(ea.DeliveryTag, false, true);
+                    await _channel!.BasicNackAsync(ea.DeliveryTag, false, false);
                 }
             }
         };
