@@ -102,6 +102,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapGet("/", () => Results.Redirect("/scalar/v1"));
+app.MapGet("/", () => Results.Redirect("/scalar/v1"))
+   .ExcludeFromDescription();
 
 app.Run();
