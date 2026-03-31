@@ -13,12 +13,12 @@ public class S3StorageService : IStorageService
 
     public S3StorageService(IConfiguration configuration)
     {
-        var endpoint = configuration["MinioSettings:Endpoint"];
-        var accessKey = configuration["MinioSettings:AccessKey"];
-        var secretKey = configuration["MinioSettings:SecretKey"];
-        var region = configuration["MinioSettings:Region"] ?? "us-east-1";
+        var endpoint = configuration["StorageSettings:Endpoint"];
+        var accessKey = configuration["StorageSettings:AccessKey"];
+        var secretKey = configuration["StorageSettings:SecretKey"];
+        var region = configuration["StorageSettings:Region"] ?? "us-east-1";
         
-        _bucketName = configuration["MinioSettings:BucketName"]!;
+        _bucketName = configuration["StorageSettings:BucketName"]!;
 
         var config = new AmazonS3Config();
 
