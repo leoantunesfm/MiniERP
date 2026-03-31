@@ -1,0 +1,102 @@
+name: Deploy MiniERP AWS
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_REGION: us-east-1
+
+jobs:
+  test-dotnet:
+    name: Run .NET Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Run Tests
+        run: dotnet test src/MiniERP.slnx --configuration Release --verbosity normal
+
+  build-and-push:
+    name: Build & Push to ECR
+    needs: test-dotnet
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and Push API
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker build -t $ECR_REGISTRY/minierp/api:latest -f src/MiniERP.Api/Dockerfile src/
+          docker push $ECR_REGISTRY/minierp/api:latest
+
+      - name: Build and Push Front-end
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker build -t $ECR_REGISTRY/minierp/ui:latest src/MiniERP.UI/
+          docker push $ECR_REGISTRY/minierp/ui:latest
+
+  deploy:
+    name: Deploy to EC2
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Copy docker-compose to Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "docker-compose.prod.yml"
+          target: "/home/ubuntu/minierp"
+
+      - name: Execute Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script:
+            sudo apt-get update && sudo apt-get install -y awscli
+            aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+            
+            cd /home/ubuntu/minierp
+            
+            cat <<EOF > .env
+            ECR_REGISTRY=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+            DB_CONNECTION=Host=${{ secrets.PROD_DB_ENDPOINT }};Port=5432;Database=MiniErpDb;Username=postgres;Password=${{ secrets.PROD_DB_PASSWORD }}
+            JWT_SECRET=${{ secrets.PROD_JWT_SECRET }}
+            AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            SES_USER=${{ secrets.PROD_SES_USER }}
+            SES_PASS=${{ secrets.PROD_SES_PASSWORD }}
+            RABBITMQ_USER=minierp_admin
+            RABBITMQ_PASS=RabbitStrongPwd2026!
+            EOF
+            
+            sudo docker compose -f docker-compose.prod.yml pull
+            sudo docker compose -f docker-compose.prod.yml up -d

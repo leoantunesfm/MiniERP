@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  # 1. Back-end (.NET API)
+  api:
+    container_name: minierp-api-prod
+    image: ${ECR_REGISTRY}/minierp/api:latest
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION}
+      - JwtSettings__SecretKey=${JWT_SECRET}
+      # Mensageria
+      - RabbitMqSettings__HostName=rabbitmq
+      - RabbitMqSettings__UserName=${RABBITMQ_USER}
+      - RabbitMqSettings__Password=${RABBITMQ_PASS}
+      # E-mail (SES)
+      - EmailSettings__SmtpHost=email-smtp.us-east-1.amazonaws.com
+      - EmailSettings__SmtpPort=587
+      - EmailSettings__EnableSsl=true
+      - EmailSettings__SmtpUser=${SES_USER}
+      - EmailSettings__SmtpPassword=${SES_PASS}
+      - EmailSettings__FromEmail=nao-responda@fillgaps.com.br
+      - EmailSettings__FromName=MiniERP
+      # Storage (S3)
+      - StorageSettings__Endpoint=
+      - StorageSettings__Region=us-east-1
+      - StorageSettings__BucketName=minierp-documentos-prod-fillgaps
+      - StorageSettings__AccessKey=${AWS_ACCESS_KEY}
+      - StorageSettings__SecretKey=${AWS_SECRET_KEY}
+    ports:
+      - "5209:8080"
+    depends_on:
+      - rabbitmq
+    restart: unless-stopped
+    networks:
+      - minierp-network
+
+  # 2. Front-end (Angular via Nginx)
+  ui:
+    container_name: minierp-ui-prod
+    image: ${ECR_REGISTRY}/minierp/ui:latest
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+    networks:
+      - minierp-network
+
+  # 3. Fila de Mensageria (RabbitMQ Interno)
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: minierp-rabbitmq-prod
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data_prod:/var/lib/rabbitmq
+    restart: unless-stopped
+    networks:
+      - minierp-network
+
+networks:
+  minierp-network:
+    driver: bridge
+
+volumes:
+  rabbitmq_data_prod:

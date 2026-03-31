@@ -51,7 +51,7 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IPerfilRepository, PerfilRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IStorageService, MinioStorageService>();
+builder.Services.AddScoped<IStorageService, S3StorageService>();
 builder.Services.AddSingleton<IMessagePublisher, RabbitMqPublisher>();
 
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
