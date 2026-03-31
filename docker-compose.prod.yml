@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # 1. Back-end (.NET API)
+  api:
+    container_name: minierp-api-prod
+    image: minierp/api:latest
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - "5209:8080"
+    depends_on:
+      - rabbitmq
+    restart: unless-stopped
+    networks:
+      - minierp-network
+
+  # 2. Front-end (Angular via Nginx)
+  ui:
+    container_name: minierp-ui-prod
+    image: minierp/ui:latest
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+    networks:
+      - minierp-network
+
+  # 3. Fila de Mensageria (RabbitMQ)
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: minierp-rabbitmq-prod
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-admin}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS:-secret}
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data_prod:/var/lib/rabbitmq
+    restart: unless-stopped
+    networks:
+      - minierp-network
+
+networks:
+  minierp-network:
+    driver: bridge
+
+volumes:
+  rabbitmq_data_prod:

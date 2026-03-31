@@ -1,3 +1,4 @@
+using Amazon;
 using Amazon.S3;
 using Amazon.S3.Transfer;
 using Microsoft.Extensions.Configuration;
@@ -5,23 +6,36 @@ using MiniERP.Domain.Interfaces;
 
 namespace MiniERP.Infrastructure.Services;
 
-public class MinioStorageService : IStorageService
+public class S3StorageService : IStorageService
 {
     private readonly AmazonS3Client _s3Client;
     private readonly string _bucketName;
 
-    public MinioStorageService(IConfiguration configuration)
+    public S3StorageService(IConfiguration configuration)
     {
         var endpoint = configuration["MinioSettings:Endpoint"];
         var accessKey = configuration["MinioSettings:AccessKey"];
         var secretKey = configuration["MinioSettings:SecretKey"];
+        var region = configuration["MinioSettings:Region"] ?? "us-east-1";
+        
         _bucketName = configuration["MinioSettings:BucketName"]!;
 
-        var config = new AmazonS3Config
+        var config = new AmazonS3Config();
+
+        if (!string.IsNullOrWhiteSpace(endpoint))
         {
-            ServiceURL = $"http://{endpoint}",
-            ForcePathStyle = true
-        };
+            if (!endpoint.StartsWith("http"))
+            {
+                endpoint = $"http://{endpoint}";
+            }
+            
+            config.ServiceURL = endpoint;
+            config.ForcePathStyle = true;
+        }
+        else
+        {
+            config.RegionEndpoint = RegionEndpoint.GetBySystemName(region);
+        }
 
         _s3Client = new AmazonS3Client(accessKey, secretKey, config);
     }
