@@ -7,6 +7,7 @@ services:
     image: ${ECR_REGISTRY}/minierp/api:latest
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - FrontendUrl=https://minierp.fillgaps.com.br
       - ConnectionStrings__DefaultConnection=${DB_CONNECTION}
       - JwtSettings__SecretKey=${JWT_SECRET}
       # Mensageria
