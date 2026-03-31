@@ -32,11 +32,30 @@ public class EmailWorker : BackgroundService
             Password = _configuration["RabbitMqSettings:Password"]
         };
 
-        _connection = await factory.CreateConnectionAsync();
-        _channel = await _connection.CreateChannelAsync();
-        await _channel.QueueDeclareAsync(queue: QueueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
+        // LOOP DE RESILIÊNCIA: Tenta conectar até o RabbitMQ acordar ou a API ser desligada
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            try
+            {
+                _logger.LogInformation("Tentando conectar ao RabbitMQ...");
+                _connection = await factory.CreateConnectionAsync();
+                _channel = await _connection.CreateChannelAsync();
+                await _channel.QueueDeclareAsync(queue: QueueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
+                
+                _logger.LogInformation("Conectado ao RabbitMQ com sucesso!");
+                break; // Sai do loop porque conseguiu conectar
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning("RabbitMQ ainda não está pronto. Tentando novamente em 5 segundos... ({Mensagem})", ex.Message);
+                await Task.Delay(5000, stoppingToken);
+            }
+        }
 
-        var consumer = new AsyncEventingBasicConsumer(_channel);
+        // Se o loop foi cancelado por desligamento da aplicação, sai silenciosamente
+        if (stoppingToken.IsCancellationRequested) return;
+
+        var consumer = new AsyncEventingBasicConsumer(_channel!);
         consumer.ReceivedAsync += async (ch, ea) =>
         {
             var content = Encoding.UTF8.GetString(ea.Body.ToArray());
@@ -59,12 +78,13 @@ public class EmailWorker : BackgroundService
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Erro ao enviar e-mail.");
+                    // Rejeita a mensagem e devolve para a fila (requeue: true)
                     await _channel!.BasicNackAsync(ea.DeliveryTag, false, true);
                 }
             }
         };
 
-        await _channel.BasicConsumeAsync(queue: QueueName, autoAck: false, consumer: consumer);
+        await _channel!.BasicConsumeAsync(queue: QueueName, autoAck: false, consumer: consumer);
 
         await Task.Delay(Timeout.Infinite, stoppingToken);
     }
