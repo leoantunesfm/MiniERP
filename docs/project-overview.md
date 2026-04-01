@@ -1,34 +1,59 @@
-# MiniERP - Visão Geral do Projeto
+﻿# MiniERP - Visao Geral do Projeto
 
-## Descrição
-Sistema simples de gestão comercial no modelo *SaaS* (*Software as a Service*). A aplicação será uma plataforma web *multitenant*, onde cada usuário pode criar uma conta, cadastrar sua empresa e gerenciar sua própria instância de dados de forma isolada (*Tenant Isolation*).
+## Descricao
 
-## Features Principais
-- **Cadastro de Produtos:** Gestão do catálogo de itens.
-- **Cadastro de Clientes:** Gestão da base de consumidores.
-- **Registro de Vendas:** Frente de caixa / processamento de pedidos.
-- **Controle de Estoque:** Rastreamento de entradas e saídas.
-- **Financeiro:** Contas a receber (crediário) e Contas a pagar.
-- **Gestão de Acessos:** Cadastro de usuários e vendedores com *Role-Based Access Control* (RBAC).
-- **Dashboard:** Tela inicial com indicadores chave de performance (KPIs) e atalhos de navegação.
-  
-## Stack Tecnológica
-- **Back-end:** .NET 10 (Web API)
-- **ORM:** Entity Framework Core (Code-First) com Migrations
-- **Banco de Dados:** PostgreSQL
-- **Front-end:** Angular *(Em desenvolvimento)*
+MiniERP e um sistema de gestao comercial em modelo SaaS multitenant. O objetivo atual do projeto e validar a base tecnica de autenticacao, onboarding de empresas e isolamento por tenant antes da expansao para modulos de negocio mais amplos.
 
-### Qualidade e Testes (QA)
-- **Back-end Testing:** xUnit (Framework), NSubstitute (Mocking) e FluentAssertions (Asserts).
-- **Front-end Testing:** Jest.
+O repositorio foi construido como estudo de arquitetura em camadas, DDD tatico e integracao entre API, front-end SPA e servicos de infraestrutura auxiliares.
 
-### Infraestrutura & DevOps
-- **Containers:** Docker e Docker Compose
-- **CI/CD:** GitHub Actions *(Planejado)*
-- **Cloud Provider:** AWS *(Planejado)*
-- **Ferramentas:** Visual Studio Code, CLI nativa
+## O que ja existe hoje
 
-## Padrões e Arquitetura
-- Código escrito mesclando inglês para *Design Patterns* e estrutura core, e português para o domínio de negócio, facilitando a manutenção local.
-- *API RESTful*.
-- Arquitetura baseada em *Clean Architecture* ou *N-Tier* (a definir conforme evolução).
+- cadastro inicial de tenant com CNPJ, nome, e-mail e senha
+- criacao automatica de usuario administrador com perfil `Admin`
+- envio assincrono de e-mail de confirmacao via RabbitMQ + worker + SMTP
+- confirmacao de e-mail com transicao de status do tenant
+- login com JWT
+- consulta de dados empresariais via ReceitaWS
+- conclusao de cadastro com upload de documentos em storage S3-compatible
+- telas Angular para onboarding, login, confirmacao, completar cadastro e dashboard
+- testes unitarios de use cases no back-end
+- compose local e pipeline de deploy versionados
+
+## O que ainda e roadmap
+
+- cadastro de produtos
+- cadastro de clientes
+- vendas e frente de caixa
+- controle de estoque
+- financeiro
+- dashboard com indicadores reais
+- ampliacao de cobertura de testes do front-end e da API
+
+## Stack tecnologica atual
+
+- Back-end: .NET 10 + ASP.NET Core
+- Persistencia: EF Core 10 + PostgreSQL
+- Front-end: Angular 21
+- Mensageria: RabbitMQ
+- E-mail local: Mailpit
+- Storage: MinIO local / S3-compatible
+- Integracao externa: ReceitaWS
+- Containers: Docker Compose
+- CI/CD: GitHub Actions com build/push/deploy para AWS
+
+## Padroes e direcoes tecnicas
+
+- separacao por camadas: `Api`, `Application`, `Domain`, `Infrastructure`, `UI`
+- contratos do dominio centralizados em interfaces do `Domain`
+- regras de negocio principais concentradas em use cases
+- autenticacao via JWT Bearer
+- front-end com rotas protegidas por guard e propagacao automatica do token por interceptor
+
+## Estado de validacao
+
+Durante esta revisao:
+
+- os testes .NET passaram
+- a suite Angular falhou por um problema de import em `confirm-email.spec.ts`
+
+Isso significa que a base de back-end esta melhor validada hoje do que a de front-end.

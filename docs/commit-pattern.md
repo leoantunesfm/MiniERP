@@ -1,111 +1,72 @@
-# 📘 Padrão de Commits — Conventional Commits
+﻿# Padrao de Commits - Conventional Commits
 
-Este documento define o padrão de mensagens de commit adotado no projeto, baseado na especificação **Conventional Commits**.
+Este documento define o padrao de mensagens de commit adotado no projeto, baseado na especificacao Conventional Commits.
 
-O objetivo é manter um histórico de commits organizado, legível e automatizável.
+O objetivo e manter um historico organizado, legivel e facil de automatizar.
 
----
+## Estrutura
 
-## 🧠 Estrutura do Commit
-
-```
-<tipo>(escopo opcional): descrição curta
+```text
+<tipo>(escopo opcional): descricao curta
 
 [corpo opcional]
 
-[rodapé opcional]
+[rodape opcional]
 ```
 
----
+## Tipos de commit
 
-## 🧩 Tipos de Commit
+| Tipo | Descricao |
+| --- | --- |
+| `feat` | Nova funcionalidade |
+| `fix` | Correcao de bug |
+| `docs` | Alteracoes na documentacao |
+| `style` | Formatacao sem mudanca de logica |
+| `refactor` | Refatoracao de codigo |
+| `test` | Adicao ou ajuste de testes |
+| `chore` | Tarefas internas, build e configuracao |
 
-| Tipo     | Descrição                             |
-| -------- | ------------------------------------- |
-| feat     | Nova funcionalidade                   |
-| fix      | Correção de bug                       |
-| docs     | Alterações na documentação            |
-| style    | Formatação (sem alteração de lógica)  |
-| refactor | Refatoração de código                 |
-| test     | Adição ou alteração de testes         |
-| chore    | Tarefas internas (build, config, etc) |
+## Escopo opcional
 
----
+O escopo ajuda a indicar a area afetada.
 
-## 🧠 Escopo (Opcional)
-
-O escopo indica a área do sistema afetada.
-
-### Exemplos:
+Exemplos:
 
 ```bash
 feat(auth): adiciona login com Google
-fix(api): corrige validação de token
+fix(api): corrige validacao de token
 refactor(user): reorganiza service
 ```
 
-### Sugestões de escopo para o projeto:
+Escopos comuns no projeto:
 
-* auth
-* api
-* ui
-* database
-* infra
-* integration
+- `auth`
+- `api`
+- `ui`
+- `database`
+- `infra`
+- `integration`
 
----
-
-## ✍️ Exemplos de Commits
-
-### ✅ Nova funcionalidade
+## Exemplos
 
 ```bash
 feat(payment): adiciona suporte a PIX
-```
-
-### 🐛 Correção de bug
-
-```bash
 fix(api): corrige erro ao validar token JWT
-```
-
-### ♻️ Refatoração
-
-```bash
-refactor(order): melhora organização do service
-```
-
-### 📄 Documentação
-
-```bash
-docs(readme): adiciona instruções de instalação
-```
-
-### 🧪 Testes
-
-```bash
+refactor(order): melhora organizacao do service
+docs(readme): adiciona instrucoes de instalacao
 test(auth): adiciona testes para login
-```
-
-### ⚙️ Tarefas internas
-
-```bash
 chore(ci): ajusta pipeline de build
 ```
 
----
+## Breaking changes
 
-## ⚠️ Breaking Changes
-
-Utilizado quando há mudanças que quebram compatibilidade.
-
-### Forma 1 — Usando "!"
+Forma curta:
 
 ```bash
 feat(api)!: altera estrutura de resposta
 ```
 
-### Forma 2 — Rodapé
+Forma com rodape:
 
 ```bash
 feat(api): altera estrutura de resposta
@@ -113,65 +74,25 @@ feat(api): altera estrutura de resposta
 BREAKING CHANGE: campo "data" foi removido
 ```
 
----
+## Boas praticas
 
-## 🧱 Corpo do Commit (Opcional)
+- use descricao curta e objetiva
+- escreva no imperativo
+- evite mensagens genericas como `ajustes`
+- separe commits por responsabilidade
+- use escopo quando fizer sentido
 
-Utilize para detalhar o contexto da alteração.
+## Impacto em versionamento
 
-```bash
-fix(auth): corrige erro no refresh token
+- `feat`: incrementa versao minor
+- `fix`: incrementa versao patch
+- `BREAKING CHANGE`: incrementa versao major
 
-O token não estava sendo validado corretamente
-quando expirava após 15 minutos.
-```
-
----
-
-## 🔚 Rodapé (Opcional)
-
-Utilizado para referenciar issues.
-
-```bash
-Closes #123
-```
-
----
-
-## 🚀 Versionamento Semântico (SemVer)
-
-Os tipos de commit podem ser utilizados para versionamento automático:
-
-| Tipo            | Impacto                          |
-| --------------- | -------------------------------- |
-| feat            | Incrementa MINOR (1.2.0 → 1.3.0) |
-| fix             | Incrementa PATCH (1.2.0 → 1.2.1) |
-| BREAKING CHANGE | Incrementa MAJOR (1.2.0 → 2.0.0) |
-
----
-
-## 🛠️ Boas Práticas
-
-* Use descrição curta e objetiva
-* Escreva no imperativo ("adiciona", "corrige", "remove")
-* Evite mensagens genéricas como "ajustes" ou "update"
-* Separe commits por responsabilidade
-* Utilize escopo sempre que possível
-
----
-
-## ✅ Padrão Simplificado (Recomendado para uso diário)
-
-Se quiser simplificar:
+## Atalho recomendado para o dia a dia
 
 ```bash
 feat: ...
 fix: ...
 refactor: ...
+docs: ...
 ```
-
----
-
-## 📌 Conclusão
-
-O uso do padrão Conventional Commits melhora a organização do projeto, facilita o entendimento do histórico e permite automações como geração de changelog e versionamento automático.

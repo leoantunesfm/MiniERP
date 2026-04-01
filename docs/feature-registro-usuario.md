@@ -1,26 +1,97 @@
-# Feature: Registro de Novo Usuário (Onboarding Multitenant)
+﻿# Feature: Registro de Novo Usuario e Onboarding Multitenant
 
-## Descrição
-Fluxo de entrada de um novo cliente na plataforma. O processo foi dividido em etapas para garantir a validação de identidade (e-mail) e coletar dados precisos de forma automatizada (integração ReceitaWS e upload de documentos).
+## Descricao
 
-## Fluxo de Estados (Tenant Status)
-Uma empresa/usuário passará pelos seguintes status:
-1. `AguardandoConfirmacaoEmail`: Conta criada, mas sem acesso liberado.
-2. `AguardandoDadosCompletos`: E-mail validado. O usuário pode fazer login, mas fica travado na tela de conclusão de cadastro.
-3. `Ativo`: Todos os dados e documentos foram fornecidos. Acesso total liberado.
+O fluxo de onboarding do MiniERP ja foi implementado em duas etapas:
 
-## 1. Etapa 1: Registro Inicial e Validação de E-mail
-* **Front-end:** Formulário simples contendo apenas **CNPJ**, Nome do Administrador, E-mail e Senha.
-* **Back-end:** * Cria a empresa com status `AguardandoConfirmacaoEmail`.
-  * Publica uma mensagem na fila do RabbitMQ (`email-validation-queue`) contendo o e-mail, nome e um *Token de Validação* (Guid exclusivo ou JWT temporário).
-* **Worker (Mensageria):** Um serviço em *background* consome a fila e faz o disparo SMTP do e-mail com o link de confirmação.
+1. registro inicial com criacao de tenant e usuario administrador
+2. conclusao de cadastro apos confirmacao de e-mail
 
-## 2. Etapa 2: Conclusão de Cadastro (Enriquecimento de Dados)
-* **API Externa:** Após o usuário clicar no link do e-mail, ele faz login e cai na tela de conclusão. O Back-end consulta a API pública `https://receitaws.com.br/v1/cnpj/{cnpj}`.
-* **Front-end:** Apresenta um formulário pré-preenchido com Razão Social, Nome Fantasia, CEP, Logradouro, Número, Complemento, Bairro, Município, UF e Telefone. O usuário pode editar os campos.
-* **Upload de Documentos:** Na mesma tela, o usuário anexa arquivos comprobatórios (ex: Contrato Social). O Back-end envia esses arquivos para um *Bucket* no MinIO (S3 Compatible).
-* **Conclusão:** O Back-end salva a URL/Path do documento no banco, atualiza os dados da empresa e muda o status para `Ativo`.
+O fluxo e guiado pelo status do tenant.
 
-## 3. Banco de Dados (Alterações Previstas)
-* **Tabela `Empresas`:** Adição dos campos de Endereço, Telefone, e campo `Status` (Enum).
-* **Tabela `DocumentosEmpresa`:** Nova tabela para registrar os metadados dos arquivos anexados (Id, EmpresaId, NomeArquivo, S3Path, DataUpload).
+## Status do tenant
+
+- `AguardandoConfirmacaoEmail`: empresa criada, aguardando clique no link enviado
+- `AguardandoDadosCompletos`: e-mail confirmado, mas cadastro empresarial ainda incompleto
+- `Ativo`: empresa liberada para uso normal
+
+## Etapa 1: Registro inicial
+
+### Front-end
+
+A rota `/onboarding` exibe formulario com:
+
+- CNPJ
+- nome do administrador
+- e-mail
+- senha
+
+Ao concluir, a tela mostra mensagem orientando o usuario a verificar a caixa de entrada.
+
+### Back-end
+
+Endpoint atual:
+
+- `POST /api/Tenants/register`
+
+Comportamento implementado:
+
+- valida duplicidade de CNPJ e e-mail
+- busca o perfil `Admin`
+- cria `Empresa` com token de confirmacao de e-mail
+- cria `Usuario` administrador
+- cria vinculacao `UsuarioPerfil`
+- salva dados no banco
+- publica mensagem na fila `email_queue`
+
+## Etapa 2: Confirmacao de e-mail
+
+### Front-end
+
+A rota `/confirm-email` recebe `token` por query string e chama a API.
+
+### Back-end
+
+Endpoint atual:
+
+- `GET /api/Tenants/confirm-email?token=...`
+
+Comportamento implementado:
+
+- busca empresa pelo token
+- invalida o token
+- atualiza status para `AguardandoDadosCompletos`
+
+## Etapa 3: Completar cadastro
+
+### Front-end
+
+A rota `/complete-registration`:
+
+- busca o tenant autenticado por `empresaId`
+- consulta o CNPJ da empresa
+- chama a ReceitaWS por meio da API para pre-preencher o formulario
+- envia os dados finais com arquivos por `multipart/form-data`
+
+### Back-end
+
+Endpoints atuais:
+
+- `GET /api/Tenants/{id}`
+- `GET /api/Tenants/cnpj-data/{cnpj}`
+- `POST /api/Tenants/complete-registration`
+
+Comportamento implementado:
+
+- consulta dados empresariais pela ReceitaWS
+- recebe os dados finais e uma colecao de arquivos
+- faz upload de documentos em storage S3-compatible
+- registra `DocumentoEmpresa`
+- ativa o tenant
+
+## Divergencias e observacoes
+
+- o planejamento original mencionava `email-validation-queue`, mas a fila implementada hoje e `email_queue`
+- o endpoint de consulta por CNPJ esta publico na implementacao atual
+- o endpoint de completar cadastro exige autenticacao, mas usa `EmpresaId` vindo do formulario
+- o dashboard so e liberado depois da ativacao do tenant
