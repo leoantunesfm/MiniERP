@@ -95,8 +95,8 @@ jobs:
             AWS_SECRET_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
             SES_USER=${{ secrets.PROD_SES_USER }}
             SES_PASS=${{ secrets.PROD_SES_PASSWORD }}
-            RABBITMQ_USER=minierp_admin
-            RABBITMQ_PASS=RabbitStrongPwd2026!
+            RABBITMQ_USER=${{ secrets.PROD_RABBITMQ_USER }}
+            RABBITMQ_PASS=${{ secrets.PROD_RABBITMQ_PASS }}
             EOF
             
             sudo docker compose -f docker-compose.prod.yml pull
