@@ -176,15 +176,6 @@ O front busca o CNPJ do tenant autenticado, consulta a ReceitaWS para pre-preenc
 
 ## Qualidade e validacao
 
-Estado validado durante esta revisao:
-
-- `dotnet test src/MiniERP.slnx --configuration Release`: passando
-- `npm test -- --watch=false`: falhando no Angular
-
-Falha atual conhecida no front-end:
-
-- `src/app/pages/confirm-email/confirm-email.spec.ts` importa um membro nao exportado (`ConfirmEmail`), o que interrompe a suite de testes
-
 Alertas observados na validacao:
 
 - dependencia transitiva antiga de `Newtonsoft.Json` sinalizada no build/teste do back-end
@@ -197,9 +188,8 @@ Alertas observados na validacao:
 - a producao esta parcialmente descrita em compose e workflow, mas a documentacao nao deve ser lida como garantia de ambiente provisionado
 - alguns arquivos de documentacao antigos estavam com encoding corrompido e foram atualizados nesta revisao
 
-## Proximos passos recomendados
+## Proximos passos
 
-- corrigir a suite de testes do Angular
 - endurecer autorizacao nos endpoints de tenant usando claims do token
 - expandir cobertura de testes para API e UI
 - evoluir os modulos de negocio ainda nao implementados

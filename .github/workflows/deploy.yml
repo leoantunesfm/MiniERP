@@ -9,6 +9,7 @@ env:
   AWS_REGION: us-east-1
 
 jobs:
+  # 1. JOB DE TESTES DO BACK-END
   test-dotnet:
     name: Run .NET Unit Tests
     runs-on: ubuntu-latest
@@ -24,9 +25,34 @@ jobs:
       - name: Run Tests
         run: dotnet test src/MiniERP.slnx --configuration Release --verbosity normal
 
+  # 2. JOB de TESTES DO FRONT-END
+  test-angular:
+    name: Run Angular Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'src/MiniERP.UI/package-lock.json'
+
+      - name: Install Dependencies
+        working-directory: ./src/MiniERP.UI
+        run: npm ci
+
+      - name: Run Tests
+        working-directory: ./src/MiniERP.UI
+
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
+
+  # 3. JOB DE BUILD
   build-and-push:
     name: Build & Push to ECR
-    needs: test-dotnet
+    needs: [test-dotnet, test-angular]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -57,6 +83,7 @@ jobs:
           docker build -t $ECR_REGISTRY/minierp/ui:latest src/MiniERP.UI/
           docker push $ECR_REGISTRY/minierp/ui:latest
 
+  # 4. JOB DE DEPLOY
   deploy:
     name: Deploy to EC2
     needs: build-and-push
