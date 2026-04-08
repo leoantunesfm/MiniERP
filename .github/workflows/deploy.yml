@@ -26,7 +26,7 @@ jobs:
         run: dotnet test src/MiniERP.slnx --configuration Release --verbosity normal
 
   # 2. JOB de TESTES DO FRONT-END
-  test-angular:
+test-angular:
     name: Run Angular Unit Tests
     runs-on: ubuntu-latest
     steps:
@@ -44,10 +44,13 @@ jobs:
         working-directory: ./src/MiniERP.UI
         run: npm ci
 
+      - name: Install Playwright Browsers
+        working-directory: ./src/MiniERP.UI
+        run: npx playwright install chromium --with-deps
+
       - name: Run Tests
         working-directory: ./src/MiniERP.UI
-
-        run: npm run test -- --watch=false --browsers=ChromeHeadless
+        run: npm run test -- --watch=false
 
   # 3. JOB DE BUILD
   build-and-push:
