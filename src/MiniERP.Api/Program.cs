@@ -63,6 +63,10 @@ builder.Services.AddScoped<ConfirmEmailUseCase>();
 builder.Services.AddScoped<GetCompanyDataByCnpjUseCase>();
 builder.Services.AddScoped<CompleteRegistrationUseCase>();
 builder.Services.AddScoped<GetTenantByIdUseCase>();
+builder.Services.AddScoped<RegisterUserUseCase>();
+builder.Services.AddScoped<ListUsersByTenantUseCase>();
+builder.Services.AddScoped<UpdateUserProfileUseCase>();
+builder.Services.AddScoped<DeactivateUserUseCase>();
 
 builder.Services.AddHostedService<EmailWorker>();
 

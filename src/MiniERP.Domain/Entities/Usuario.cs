@@ -23,4 +23,15 @@ public class Usuario : BaseEntity
         SenhaHash = senhaHash;
         Ativo = true;
     }
+
+    public void Inativar()
+    {
+        Ativo = false;
+    }
+
+    public void AtualizarPerfil(Guid perfilId)
+    {
+        UsuarioPerfis.Clear();
+        UsuarioPerfis.Add(new UsuarioPerfil(Id, perfilId));
+    }
 }
