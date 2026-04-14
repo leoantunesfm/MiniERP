@@ -73,4 +73,15 @@ export class AuthService {
   getTenantById(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/tenants/${id}`);
   }
+
+getUserName(): string {
+    return localStorage.getItem('minierp_user_nome') || 'Usuário';
+  }
+
+  logout() {
+    localStorage.removeItem('minierp_token');
+    localStorage.removeItem('minierp_user_nome');
+    localStorage.removeItem('minierp_empresa_id');
+    localStorage.removeItem('minierp_tenant_status');
+  }
 }
