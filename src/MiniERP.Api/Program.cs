@@ -14,11 +14,36 @@ using MiniERP.Infrastructure.Services;
 using MiniERP.Api.Workers;
 using MiniERP.Application.Interfaces;
 using MiniERP.Infrastructure.ExternalServices;
+using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();  
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    {
+        var scheme = new OpenApiSecurityScheme
+        {
+            Type = SecuritySchemeType.Http, 
+            Scheme = "bearer", 
+            BearerFormat = "JWT"
+        };
+
+        document.Components ??= new OpenApiComponents();
+        document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
+        document.Components.SecuritySchemes["Bearer"] = scheme;
+
+        document.Security ??= new List<OpenApiSecurityRequirement>();
+        
+        document.Security.Add(new OpenApiSecurityRequirement
+        {
+            [new OpenApiSecuritySchemeReference("Bearer")] = new List<string>()
+        });
+
+        return Task.CompletedTask;
+    });
+});
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKey = jwtSettings["SecretKey"];
@@ -64,6 +89,7 @@ builder.Services.AddScoped<GetCompanyDataByCnpjUseCase>();
 builder.Services.AddScoped<CompleteRegistrationUseCase>();
 builder.Services.AddScoped<GetTenantByIdUseCase>();
 builder.Services.AddScoped<RegisterUserUseCase>();
+builder.Services.AddScoped<ListProfilesUseCase>();
 builder.Services.AddScoped<ListUsersByTenantUseCase>();
 builder.Services.AddScoped<UpdateUserProfileUseCase>();
 builder.Services.AddScoped<DeactivateUserUseCase>();

@@ -2,7 +2,7 @@ namespace MiniERP.Application.DTOs;
 
 public record CompleteRegistrationRequestDto
 {
-    public Guid EmpresaId { get; init; }
+    public Guid EmpresaId { get; set; }
     public string RazaoSocial { get; init; } = string.Empty;
     public string NomeFantasia { get; init; } = string.Empty;
     public string Telefone { get; init; } = string.Empty;

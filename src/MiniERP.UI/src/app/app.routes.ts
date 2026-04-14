@@ -6,32 +6,48 @@ import { authGuard } from './guards/auth-guard';
 import { guestGuard } from './guards/guest-guard';
 import { ConfirmEmailComponent } from './pages/confirm-email/confirm-email';
 import { CompleteRegistration } from './pages/complete-registration/complete-registration';
+import { roleGuard } from './guards/role-guard';
+import { UsersComponent } from './pages/users/users';
+import { UserFormComponent } from './pages/users/user-form/user-form';
 
 export const routes: Routes = [
-  { 
-    path: 'login', 
+  {
+    path: 'login',
     component: LoginComponent,
-    canActivate: [guestGuard] 
+    canActivate: [guestGuard]
   },
-  { 
-    path: 'onboarding', 
+  {
+    path: 'onboarding',
     component: OnboardingComponent,
-    canActivate: [guestGuard] 
+    canActivate: [guestGuard]
   },
-  { 
-    path: 'confirm-email', 
+  {
+    path: 'confirm-email',
     component: ConfirmEmailComponent,
-    canActivate: [guestGuard] 
+    canActivate: [guestGuard]
   },
-  { 
-    path: 'complete-registration', 
+  {
+    path: 'complete-registration',
     component: CompleteRegistration,
     canActivate: [authGuard]
   },
-  { 
-    path: 'dashboard', 
+  {
+    path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [authGuard] 
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'users',
+        component: UsersComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['Admin'] }
+      },
+      {
+        path: 'users/new',
+        component: UserFormComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['Admin'] }
+      }
+    ]
   },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
-];
+  { path: '', redirectTo: '/login', pathMatch: 'full' }];
